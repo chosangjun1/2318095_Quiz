@@ -1,9 +1,13 @@
-db = input("숫자를 입력하시오?:")
+import random
 
-a = int(db)
+results = []
 
-for a in range(0,a+1) :
-    print("----[",a,"]단입니다.----")
+while len(results)<6:
+    ran_num = random.randint(1,45)
+    if ran_num in results :
+        print("results 안에 ran_num이 있으므로, result를 제거하고 출력했습니다.")
+    else:
+        results.append(ran_num)
 
-for b in range(0,a+1) :
-    print(a,b)
+print(results)
+
