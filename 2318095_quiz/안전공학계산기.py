@@ -74,6 +74,16 @@ elif wt_calculate == "환산도수율":
     result = wt_calculate_GFr(GFra,GFrb)
     print("환산 도수율은", result, "입니다.")
 
+#안전관리비
+
+elif wt_calculate == "안전관리비":
+    def calculate_safety_management_cost(total_cost, safety_percent):
+        return total_cost * (safety_percent/100)
+    print("프로젝트 총비용 x 안전관리비율(%)")
+    toC = float(input("프로젝트 총 비용을 입력하시오.:"))
+    syp = float(input("안전관리비 비율을 입력하시오.(%):"))
+    result = calculate_safety_management_cost(toC,syp)
+    print("안전관리비는",result,"원 입니다.")
 #환산강도율
 
 elif wt_calculate == "환산강도율":
@@ -96,76 +106,91 @@ elif wt_calculate == "평균강도율":
     result = wt_Sr_averge(Sr,Fr)
     print("재해 1건 당 평균 근로손실일수는",result, "입니다.")
 
-#종합재해지수
 
-elif wt_calculate == "종합재해지수":
+#안전하중
+
+elif wt_calculate == "안전하중":
+    def calculate_safe_load(yield_strength, safety_factor, cross_sectional_area):
+        # 허용응력 계산
+        allowable_stress = yield_strength / safety_factor
+
+        # 안전하중 계산
+        safe_load = allowable_stress * cross_sectional_area
+
+        return safe_load
+
+
+    yield_strength = float(input("재료의 항복강도 (MPa): "))
+    safety_factor = float(input("안전계수: "))
+    cross_sectional_area = float(input("단면적 (m²): "))
+
+    safe_load = calculate_safe_load(yield_strength, safety_factor, cross_sectional_area)
+
+    print(f"안전하중은 {safe_load:.2f} 메가뉴턴입니다.")
+
+#종합재해위험지수
+
+elif wt_calculate == "종합재해위험지수":
     def wt_event_total(Sr,Fr):
         return int(Sr)*int(Fr)
     print("Event_Total=(강도율 x 도수율)")
     Sr = input("강도율을 입력하시오.:")
     Fr = input("도수율을 입력하시오.:")
     result = wt_event_total(Sr,Fr)
-    print("종합재해지수는",result, "입니다.")
+    print("종합재해위험지수는",result, "입니다.")
 
 #재해손실일수
-
 elif wt_calculate == "재해손실일수":
-    if wt_calculate == "재해손실일수":
-        def calculate_loss_days(disability_grade):
-            if 1 <= disability_grade <= 3:
+    def calculate_loss_days(disability_grade):
+        if 1 <= disability_grade <= 3:
                 return 7500
-            elif disability_grade == 4:
+        elif disability_grade == 4:
                 return 5500
-            elif disability_grade == 5:
+        elif disability_grade == 5:
                 return 4000
-            elif disability_grade == 6:
+        elif disability_grade == 6:
                 return 3000
-            elif disability_grade == 7:
+        elif disability_grade == 7:
                 return 2200
-            elif disability_grade == 8:
+        elif disability_grade == 8:
                 return 1500
-            elif disability_grade == 9:
+        elif disability_grade == 9:
                 return 1000
-            elif disability_grade == 10:
+        elif disability_grade == 10:
                 return 600
-            elif disability_grade == 11:
+        elif disability_grade == 11:
                 return 400
-            elif disability_grade == 12:
+        elif disability_grade == 12:
                 return 200
-            elif disability_grade == 13:
+        elif disability_grade == 13:
                 return 100
-            elif disability_grade == 14:
+        elif disability_grade == 14:
                 return 50
-            else:
-                return None
-
-
-        disability_grade = int(input("장애 등급을 입력하세요 (1~14): "))
-
-        loss_days = calculate_loss_days(disability_grade)
-        if loss_days is not None:
-            print(f"장애 등급 {disability_grade}에 따른 재해 손실 일수는 {loss_days}일 입니다.")
         else:
-            print("잘못된 등급이 입력되었습니다.")
+            return None
+
+
+    disability_grade = int(input("장애 등급을 입력하세요 (1~14): "))
+
+    loss_days = calculate_loss_days(disability_grade)
+    if loss_days is not None:
+        print(f"장애 등급 {disability_grade}에 따른 재해 손실 일수는 {loss_days}일 입니다.")
+    else:
+        print("잘못된 등급이 입력되었습니다.")
 
 else:
     print("다른 계산을 시도하십시오.")
 
 #무재해운동 n일차
-def display_safe_day(day, total_days):
-    if day == total_days:
-        return f"무재해 운동 {day}일차 진행중"
-    else:
-        return f"무재해 운동 {day}일차"
+import time
 
-def generate_safe_days(n):
-    safe_days = []
-    for i in range(1, n + 1):
-        safe_days.append(display_safe_day(i, n))
-    return safe_days
+def track_days():
+    day_count = 0
+    while True:
+        print(f"무재해 운동 {day_count}일차 입니다.")
+        day_count += 1
+        time.sleep(5) #테스트를 위해 1일을 5초로 설정 실제는(24*60*60)
 
-n_days = int(input("무재해 운동을 몇 일 동안 진행하셨습니까?: "))
-
-safe_days = generate_safe_days(n_days)
-for day in safe_days:
-    print(day)
+track_days()
+# 무재해 운동 일수를 계속 기억 시키고 이어가게 하려면
+# 조금 더 공부가 필요할듯..
