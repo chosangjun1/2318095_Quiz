@@ -1,24 +1,25 @@
-def calculate_safety_management_cost(total_cost, safety_percentage):
-    # 안전관리비 계산
-    safety_cost = total_cost * (safety_percentage / 100)
-    return safety_cost
+class 붕어빵_클래스:
+    총_판매_가격 = 0
+    def __init__(self, 재료, 가격):
+        self.재료 = 재료
+        self.가격 = 가격
 
+    def sell(self):
+        print(f"{self.재료} 붕어빵이 {self.가격}원에 판매되었습니다.")
+        붕어빵_클래스.총_판매_가격 += self.가격
 
-def main():
-    try:
-        # 사용자 입력받기
-        total_cost = float(input("프로젝트의 총 비용을 입력하세요 (원): "))
-        safety_percentage = float(input("안전관리비 비율을 입력하세요 (%): "))
+    def eat(self):
+        print(f"{self.재료} 붕어빵을 먹었습니다.")
 
-        # 안전관리비 계산
-        safety_cost = calculate_safety_management_cost(total_cost, safety_percentage)
+슈크림_붕어빵 = 붕어빵_클래스("슈크림", 1000)
+민트초코_붕어빵 = 붕어빵_클래스("팥", 5000)
+이시현_붕어빵 = 붕어빵_클래스("피자", 1)
+교수님_붕어빵 = 붕어빵_클래스("교수님", 50000000)
 
-        # 결과 출력
-        print(f"안전관리비는 {safety_cost:.2f} 원 입니다.")
-    except ValueError:
-        # 입력 값이 유효한 숫자가 아닌 경우 오류 메시지 출력
-        print("유효한 숫자를 입력하세요.")
-
-
-# 프로그램 시작
-main()
+민트초코_붕어빵.sell()
+민트초코_붕어빵.eat()
+이시현_붕어빵.sell()
+이시현_붕어빵.eat()
+교수님_붕어빵.sell()
+교수님_붕어빵.eat()
+print(f"총 판매금: {붕어빵_클래스.총_판매_가격}원 입니다.")
